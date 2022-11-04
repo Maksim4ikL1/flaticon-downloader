@@ -232,7 +232,7 @@ def main():
     if input("\033[91mContinue? > \033[0m")[0].lower() != "y":
         print("\033[96m\n* * * STOP * * *\n\033[0m")
         sys.exit(0)
-    print("\033[92m\n* * * DONWLOADING * * *\n\033[0m")
+    print("\033[96m\n* * * DONWLOADING * * *\n\033[0m")
     for image in images:
         if arguments.resolution == 0:
             file_name = image.rsplit(
@@ -247,6 +247,8 @@ def main():
 if __name__ == "__main__":
     try:
         main()
-    except (EOFError, KeyboardInterrupt) as err:
+    except (EOFError, IndexError, KeyboardInterrupt) as err:
         print("\033[96m\n* * * STOP * * *\n\033[0m")
+    except (requests.ConnectionError, requests.Timeout) as err:
+        print("\033[91m\nERROR!!!\nCHECK YOUR INTERNET CONNECTION!!!\n\033[0m")
     sys.exit(0)
