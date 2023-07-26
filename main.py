@@ -5,7 +5,6 @@ import random
 import sys
 
 import requests
-import wget
 from lxml import html
 
 RESOLUTIONS = [16, 24, 32, 64, 128, 256, 512]
@@ -107,7 +106,8 @@ def download(image_url, output_file):
     output_dir = os.path.dirname(output_file)
     if not os.path.exists(output_dir):
         os.makedirs(output_dir, exist_ok=True)
-    wget.download(image_url, output_file, None)
+    response = requests.get(image_url, allow_redirects=True)
+    open(output_file, "wb").write(response.content)
 
 
 def get_image_url(page_url, image_resolution):
